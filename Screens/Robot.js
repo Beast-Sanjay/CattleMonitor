@@ -1,28 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet,Text,View,Button,TouchableOpacity } from "react-native";
+import {getDatabase, ref, set, update, onValue, remove} from "firebase/database"
+import {db} from './config'
 
 export default function Robot(){
+
+    const robot = useState("")
+    function storeData(robot){
+        update(ref(db, 'controls/'),{
+        Direction:robot
+        })
+      }
+
     return(
         <View style={styles.container}>
             <View >
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPressIn={()=>storeData('Up')}>
                     <Text style={styles.des}>UP</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.bttn}>
+                <TouchableOpacity style={styles.bttn} onPressIn={()=>storeData('Stop')}>
                     <Text style={styles.des}>ROBOT</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.des}>DOWN</Text>
+                <TouchableOpacity style={styles.button} onPressIn={()=>storeData('Down')}>
+                    <Text style={styles.des} >DOWN</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.rtn} >
-                <TouchableOpacity style={styles.side}>
+                <TouchableOpacity style={styles.side} onPressIn={()=>storeData('Left')}>
                     <Text>LEFT</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.side}>
+                <TouchableOpacity style={styles.side} onPressIn={()=>storeData('Right')}>
                     <Text >RIGHT</Text>
                 </TouchableOpacity>
             </View>
